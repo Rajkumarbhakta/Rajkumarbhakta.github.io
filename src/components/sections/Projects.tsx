@@ -22,18 +22,32 @@ const professionalProjects = [
 
 const personalProjects = [
     {
-        title: "Fitness Tracker App",
-        description: "A comprehensive fitness tracking application with workout plans, diet tracking, and progress analytics.",
-        tags: ["React Native", "Firebase", "Redux"],
-        image: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "#", github: "#" },
+        title: "Canvas (Multiplatform Drawing App)",
+        description: "Cross-platform drawing app (Android, iOS, web, desktop) with offline storage, customizable brushes, undo/redo, and dark mode. 7K+ downloads and 2K+ active users.",
+        tags: ["Kotlin Multiplatform", "Compose Multiplatform", "Coroutines"],
+        image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800",
+        links: { demo: "https://me.rkbapps.in/canvas_build", github: "https://github.com/Rajkumarbhakta/Canvas" },
     },
     {
-        title: "Social Media Dashboard",
-        description: "Analytics dashboard for social media managers to track engagement and growth across platforms.",
-        tags: ["React", "TypeScript", "Chart.js"],
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "#", github: "#" },
+        title: "TooAI (AI Utility App)",
+        description: "On-device AI app offering OCR, barcode scanning, and image segmentation using Google ML Kit and TensorFlow Lite.",
+        tags: ["Kotlin", "ML Kit", "Firebase", "CameraX"],
+        image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800",
+        links: { demo: "https://play.google.com/store/apps/details?id=com.rkbapps.tooai", github: "https://github.com/Rajkumarbhakta/TooAi" },
+    },
+    {
+        title: "G Dealz (Gaming Deals App)",
+        description: "Tracks real-time game deals and free giveaways with notifications. 7K+ downloads. Top rankings in Play Store's 'Top New Free Apps'.",
+        tags: ["Kotlin", "MVVM", "Retrofit", "Room "],
+        image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=800",
+        links: { demo: "https://play.google.com/store/apps/details?id=com.rkbapps.gdealz", github: "https://github.com/Rajkumarbhakta/GDealz" },
+    },
+    {
+        title: "Physics Galaxy (EdTech App)",
+        description: "Interactive physics learning app with study materials, online tests, and integrated payments. 2K+ downloads.",
+        tags: ["Kotlin", "Jetpack Compose", "Firebase"],
+        image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800",
+        links: { demo: "https://play.google.com/store/apps/details?id=com.rkbapps.physicsgalaxy", github: "#" },
     },
 ];
 
