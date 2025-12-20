@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export function Hero() {
     return (
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
             {/* Background Elements */}
             <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[100px]" />
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-[100px]" />
@@ -24,11 +24,13 @@ export function Hero() {
                         </span>
                     </div>
                     <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                        Building <span className="text-gradient">Digital Experiences</span> for Mobile
+                        Hi, I'm <span className="text-gradient">Rajkumar Bhakta</span>
+                        <br />
+                        <span className="text-3xl md:text-5xl block mt-2 text-white">Building Digital Experiences for Mobile</span>
                     </h1>
                     <p className="text-gray-400 text-lg mb-8 max-w-lg">
-                        I craft high-performance, beautiful mobile applications using React Native and Flutter.
-                        Turning ideas into reality, one pixel at a time.
+                        I craft high-performance, beautiful mobile applications specializing in Native Android (Kotlin & Java).
+                        I also build cross-platform solutions using Flutter and Compose Multiplatform. Turning ideas into reality, one pixel at a time.
                     </p>
                     <div className="flex flex-wrap gap-4">
                         <Link
@@ -82,10 +84,10 @@ export function Hero() {
                             <div className="flex justify-between items-center">
                                 <div>
                                     <div className="text-xs text-gray-400">Welcome back</div>
-                                    <div className="text-lg font-bold text-white">Alex Dev</div>
+                                    <div className="text-lg font-bold text-white">Rajkumar</div>
                                 </div>
                                 <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary p-0.5">
-                                    <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center text-xs font-bold text-white">AD</div>
+                                    <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center text-xs font-bold text-white">RB</div>
                                 </div>
                             </div>
 

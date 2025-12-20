@@ -23,10 +23,10 @@ export function About() {
                         Passionate about creating <span className="text-gradient">intuitive</span> mobile experiences
                     </h2>
                     <p className="text-gray-400 text-lg leading-relaxed mb-12">
-                        I am a dedicated mobile developer with a strong foundation in both iOS and Android platforms.
-                        My journey started with native development, and I've since mastered cross-platform frameworks
-                        like React Native and Flutter to deliver efficient, scalable solutions. I believe in clean code,
-                        pixel-perfect design, and user-centric development.
+                        I am a dedicated mobile developer with deep expertise in Native Android development (Kotlin & Java).
+                        My journey is rooted in native development, and I've expanded my skills to cross-platform architectures
+                        using Flutter and Kotlin Multiplatform to deliver efficient, scalable solutions. I believe in clean code,
+                        modern architecture, and user-centric development.
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

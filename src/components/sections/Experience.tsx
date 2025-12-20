@@ -5,25 +5,18 @@ import { Briefcase, Calendar } from "lucide-react";
 
 const experiences = [
     {
-        role: "Senior Mobile Developer",
-        company: "Tech Solutions Inc.",
-        period: "2022 - Present",
-        description: "Leading the mobile development team in building cross-platform applications using React Native. Improved app performance by 40% and implemented CI/CD pipelines.",
-        skills: ["React Native", "TypeScript", "Redux", "CI/CD"],
+        role: "Software Developer",
+        company: "Sentientgeeks Consultancy and Services",
+        period: "Mar 2025 - Present",
+        description: "Built and optimized Android apps using Jetpack Compose and MVVM architecture. Developed an offline-first employee tracking app with Room DB and Compose UI. Improved app modularity, scalability, and performance through clean architecture.",
+        skills: ["Jetpack Compose", "MVVM", "Room DB", "Clean Architecture", "Android"],
     },
     {
-        role: "Mobile App Developer",
-        company: "Creative Apps Studio",
-        period: "2020 - 2022",
-        description: "Developed and maintained multiple iOS and Android applications using Flutter. Collaborated with designers to implement pixel-perfect UIs.",
-        skills: ["Flutter", "Dart", "Firebase", "Figma"],
-    },
-    {
-        role: "Junior iOS Developer",
-        company: "StartUp Hub",
-        period: "2018 - 2020",
-        description: "Assisted in the development of native iOS applications using Swift. Fixed bugs and implemented new features for existing apps.",
-        skills: ["Swift", "UIKit", "CoreData"],
+        role: "Junior Android Developer",
+        company: "Redoq Software Services Ltd.",
+        period: "Sep 2023 - Mar 2025",
+        description: "Developed and deployed Android and Flutter applications for enterprise clients. Built a POS system with billing, inventory, and analytics using MVVM + Firebase. Created a no-code website builder enabling real-time drag-and-drop UI generation.",
+        skills: ["Android", "Flutter", "MVVM", "Firebase", "Enterprise Apps"],
     },
 ];
 

@@ -2,100 +2,126 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Smartphone } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Smartphone, User, Cpu, Briefcase, Layers, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" },
+    { name: "About", href: "#about", icon: User },
+    { name: "Skills", href: "#skills", icon: Cpu },
+    { name: "Experience", href: "#experience", icon: Briefcase },
+    { name: "Projects", href: "#projects", icon: Layers },
+    { name: "Contact", href: "#contact", icon: Mail },
 ];
 
 export function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState("");
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20);
         };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                // Find the entry with the highest intersection ratio
+                const visibleSection = entries.reduce((max, entry) => {
+                    return entry.intersectionRatio > max.intersectionRatio ? entry : max;
+                }, entries[0]);
+
+                if (visibleSection && visibleSection.isIntersecting && visibleSection.intersectionRatio > 0.2) {
+                    setActiveSection(visibleSection.target.id);
+                }
+            },
+            { threshold: [0.2, 0.5, 0.8] }
+        );
+
+        document.querySelectorAll("section[id]").forEach((section) => {
+            observer.observe(section);
+        });
+
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            observer.disconnect();
+        };
     }, []);
 
     return (
-        <nav
-            className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-                scrolled ? "nav-glass py-4" : "py-6 bg-transparent"
-            )}
-        >
-            <div className="container mx-auto px-6 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-                    <Smartphone className="w-8 h-8 text-primary" />
-                    <span className="text-gradient">DevPortfolio</span>
-                </Link>
-
-                {/* Desktop Menu */}
-                <div className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-sm font-medium text-gray-300 hover:text-white transition-colors hover:scale-105 transform"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                    <Link
-                        href="#contact"
-                        className="px-6 py-2 rounded-full bg-primary/20 border border-primary/50 text-primary hover:bg-primary/30 transition-all"
-                    >
-                        Hire Me
+        <>
+            {/* Top Navbar (Desktop Only) */}
+            <nav
+                className={cn(
+                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 hidden md:block",
+                    scrolled ? "nav-glass py-4" : "py-6 bg-transparent"
+                )}
+            >
+                <div className="container mx-auto px-6 flex items-center justify-between">
+                    <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
+                        <Smartphone className="w-8 h-8 text-primary" />
+                        <span className="text-gradient">Rajkumar Bhakta</span>
                     </Link>
-                </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden text-white"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    {isOpen ? <X /> : <Menu />}
-                </button>
-            </div>
-
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="absolute top-full left-0 right-0 glass border-t border-glass-border md:hidden p-6 flex flex-col gap-4"
-                    >
+                    <div className="flex items-center gap-8">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-lg font-medium text-gray-300 hover:text-white"
-                                onClick={() => setIsOpen(false)}
+                                className={cn(
+                                    "text-sm font-medium transition-colors hover:scale-105 transform",
+                                    activeSection === link.href.substring(1)
+                                        ? "text-primary font-bold"
+                                        : "text-gray-300 hover:text-white"
+                                )}
                             >
                                 {link.name}
                             </Link>
                         ))}
                         <Link
                             href="#contact"
-                            className="px-6 py-2 rounded-full bg-primary/20 border border-primary/50 text-primary hover:bg-primary/30 transition-all text-center"
-                            onClick={() => setIsOpen(false)}
+                            className="px-6 py-2 rounded-full bg-primary/20 border border-primary/50 text-primary hover:bg-primary/30 transition-all"
                         >
                             Hire Me
                         </Link>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Mobile Top Bar (Logo Only) */}
+            <div className="md:hidden fixed top-0 left-0 right-0 z-40 p-4 transition-all duration-300 bg-background/80 backdrop-blur-md border-b border-white/5">
+                <Link href="/" className="flex items-center gap-2 text-xl font-bold">
+                    <Smartphone className="w-6 h-6 text-primary" />
+                    <span className="text-gradient">Rajkumar Bhakta</span>
+                </Link>
+            </div>
+
+            {/* Bottom Navigation (Mobile Only) */}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass border-t border-glass-border pb-safe">
+                <div className="flex items-center justify-around p-3">
+                    {navLinks.map((link) => {
+                        const Icon = link.icon;
+                        const isActive = activeSection === link.href.substring(1);
+                        return (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className={cn(
+                                    "flex flex-col items-center gap-1 min-w-[3.5rem] p-1 transition-colors group",
+                                    isActive ? "text-primary" : "text-gray-400 hover:text-primary"
+                                )}
+                            >
+                                <div className={cn(
+                                    "p-1.5 rounded-full transition-colors",
+                                    isActive ? "bg-primary/20" : "group-hover:bg-primary/10"
+                                )}>
+                                    <Icon className="w-5 h-5" />
+                                </div>
+                                <span className="text-[10px] font-medium">{link.name}</span>
+                            </Link>
+                        );
+                    })}
+                </div>
+            </nav>
+        </>
     );
 }

@@ -3,16 +3,38 @@
 import { motion } from "framer-motion";
 
 const skills = [
-    { name: "React Native", category: "Mobile" },
-    { name: "Flutter", category: "Mobile" },
-    { name: "Swift (iOS)", category: "Mobile" },
-    { name: "Kotlin (Android)", category: "Mobile" },
-    { name: "TypeScript", category: "Web" },
-    { name: "React / Next.js", category: "Web" },
-    { name: "Node.js", category: "Backend" },
-    { name: "Firebase", category: "Backend" },
-    { name: "GraphQL", category: "Backend" },
-    { name: "Figma", category: "Design" },
+    // Programming Languages
+    { name: "Kotlin", category: "Languages" },
+    { name: "Java", category: "Languages" },
+    { name: "Dart", category: "Languages" },
+
+    // Cross-Platform Development
+    { name: "Flutter", category: "Cross-Platform" },
+    { name: "Compose Multiplatform", category: "Cross-Platform" },
+    { name: "Kotlin Multiplatform", category: "Cross-Platform" },
+
+    // Frameworks & Architecture
+    { name: "MVVM", category: "Architecture" },
+    { name: "Jetpack Compose", category: "Android" },
+    { name: "Retrofit", category: "Android" },
+    { name: "Room DB", category: "Android" },
+    { name: "Hilt", category: "DI" },
+    { name: "Koin", category: "DI" },
+
+    // Backend & Network
+    { name: "Spring Boot", category: "Backend" },
+    { name: "Ktor Client", category: "Network" },
+
+    // Tools & Platforms
+    { name: "Android Studio", category: "Tools" },
+    { name: "Git & GitHub", category: "Tools" },
+    { name: "Postman", category: "Tools" },
+    { name: "Firebase Suite", category: "Backend" },
+
+    // CI/CD & Testing
+    { name: "GitHub Actions", category: "CI/CD" },
+    { name: "JUnit", category: "Testing" },
+    { name: "Espresso", category: "Testing" },
 ];
 
 export function Skills() {
