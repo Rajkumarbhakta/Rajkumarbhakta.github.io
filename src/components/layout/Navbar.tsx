@@ -24,16 +24,37 @@ export function Navbar() {
 
         const observer = new IntersectionObserver(
             (entries) => {
-                // Find the entry with the highest intersection ratio
-                const visibleSection = entries.reduce((max, entry) => {
-                    return entry.intersectionRatio > max.intersectionRatio ? entry : max;
-                }, entries[0]);
+                // Filter for intersecting entries
+                const intersectingEntries = entries.filter(entry => entry.isIntersecting);
 
-                if (visibleSection && visibleSection.isIntersecting && visibleSection.intersectionRatio > 0.2) {
-                    setActiveSection(visibleSection.target.id);
+                if (intersectingEntries.length === 0) return;
+
+                // Find the section that is most visible in the viewport
+                const mostVisible = intersectingEntries.reduce((max, entry) => {
+                    const rect = entry.target.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+
+                    // Calculate how much of the section is visible
+                    const visibleTop = Math.max(0, rect.top);
+                    const visibleBottom = Math.min(viewportHeight, rect.bottom);
+                    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+                    const maxRect = max.target.getBoundingClientRect();
+                    const maxVisibleTop = Math.max(0, maxRect.top);
+                    const maxVisibleBottom = Math.min(viewportHeight, maxRect.bottom);
+                    const maxVisibleHeight = Math.max(0, maxVisibleBottom - maxVisibleTop);
+
+                    return visibleHeight > maxVisibleHeight ? entry : max;
+                }, intersectingEntries[0]);
+
+                if (mostVisible) {
+                    setActiveSection(mostVisible.target.id);
                 }
             },
-            { threshold: [0.2, 0.5, 0.8] }
+            {
+                threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+                rootMargin: '-20% 0px -20% 0px'
+            }
         );
 
         document.querySelectorAll("section[id]").forEach((section) => {

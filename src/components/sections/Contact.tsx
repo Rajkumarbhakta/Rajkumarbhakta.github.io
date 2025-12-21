@@ -1,9 +1,31 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 
 export function Contact() {
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const { name, email, subject, message } = formData;
+        const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+        window.location.href = `mailto:contact@rkbapps.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.id]: e.target.value
+        });
+    };
+
     return (
         <section id="contact" className="py-20 relative overflow-hidden">
             {/* Background Glow */}
@@ -37,7 +59,7 @@ export function Contact() {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-white mb-1">Email</h3>
-                                <p className="text-gray-400">hello@example.com</p>
+                                <p className="text-gray-400">contact@rkbapps.in</p>
                             </div>
                         </div>
                         <div className="glass-card p-6 rounded-2xl flex items-start gap-4">
@@ -46,7 +68,7 @@ export function Contact() {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-white mb-1">Phone</h3>
-                                <p className="text-gray-400">+1 (555) 123-4567</p>
+                                <p className="text-gray-400">+91 8373001874</p>
                             </div>
                         </div>
                         <div className="glass-card p-6 rounded-2xl flex items-start gap-4">
@@ -55,7 +77,7 @@ export function Contact() {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-white mb-1">Location</h3>
-                                <p className="text-gray-400">San Francisco, CA</p>
+                                <p className="text-gray-400">Kolkata, India</p>
                             </div>
                         </div>
                     </motion.div>
@@ -67,36 +89,52 @@ export function Contact() {
                         transition={{ duration: 0.6 }}
                         className="glass-card p-8 rounded-3xl"
                     >
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-300">Name</label>
+                                    <label htmlFor="name" className="text-sm font-medium text-gray-300">Name</label>
                                     <input
+                                        id="name"
                                         type="text"
+                                        required
+                                        value={formData.name}
+                                        onChange={handleChange}
                                         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-white"
                                         placeholder="John Doe"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-300">Email</label>
+                                    <label htmlFor="email" className="text-sm font-medium text-gray-300">Email</label>
                                     <input
+                                        id="email"
                                         type="email"
+                                        required
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-white"
                                         placeholder="john@example.com"
                                     />
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-300">Subject</label>
+                                <label htmlFor="subject" className="text-sm font-medium text-gray-300">Subject</label>
                                 <input
+                                    id="subject"
                                     type="text"
+                                    required
+                                    value={formData.subject}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-white"
                                     placeholder="Project Inquiry"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-300">Message</label>
+                                <label htmlFor="message" className="text-sm font-medium text-gray-300">Message</label>
                                 <textarea
+                                    id="message"
+                                    required
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-white h-32 resize-none"
                                     placeholder="Tell me about your project..."
                                 />

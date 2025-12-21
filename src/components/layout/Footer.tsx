@@ -1,4 +1,6 @@
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export function Footer() {
     return (
@@ -9,16 +11,22 @@ export function Footer() {
                 </p>
 
                 <div className="flex items-center gap-6">
-                    <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <a href="https://github.com/Rajkumarbhakta/" className="text-gray-400 hover:text-primary transition-colors">
                         <Github className="w-5 h-5" />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <a href="https://www.linkedin.com/in/rajkumar-bhakta" className="text-gray-400 hover:text-primary transition-colors">
                         <Linkedin className="w-5 h-5" />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                        <Twitter className="w-5 h-5" />
+                    <a href="https://play.google.com/store/apps/dev?id=8595458926248803860" className="opacity-60 hover:opacity-100 transition-opacity">
+                        <Image
+                            src="/google_play.png"
+                            alt="Play Store"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 grayscale hover:grayscale-0 transition-all"
+                        />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <a href="mailto:contact@rkbapps.in" className="text-gray-400 hover:text-primary transition-colors">
                         <Mail className="w-5 h-5" />
                     </a>
                 </div>
