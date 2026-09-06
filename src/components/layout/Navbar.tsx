@@ -1,148 +1,188 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Smartphone, User, Cpu, Briefcase, Layers, Mail } from "lucide-react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-const navLinks = [
-    { name: "About", href: "#about", icon: User },
-    { name: "Skills", href: "#skills", icon: Cpu },
-    { name: "Experience", href: "#experience", icon: Briefcase },
-    { name: "Projects", href: "#projects", icon: Layers },
-    { name: "Contact", href: "#contact", icon: Mail },
-];
+import { springs } from "@/lib/motion";
+import { navItems } from "@/data/nav";
+import { profile } from "@/data/profile";
+import Image from "next/image";
+import { Icon, LinkButton, ThemeToggle } from "@/components/ui";
 
 export function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
-    const [activeSection, setActiveSection] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("section[id]"));
+    if (sections.length === 0) return;
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                // Filter for intersecting entries
-                const intersectingEntries = entries.filter(entry => entry.isIntersecting);
+    let frame = 0;
 
-                if (intersectingEntries.length === 0) return;
+    /**
+     * Picks the section occupying the most viewport height.
+     *
+     * This deliberately measures every section on each pass rather than using
+     * an IntersectionObserver. An observer callback only carries the entries
+     * whose intersection *changed*, so comparing "most visible" across that
+     * partial set can hand the indicator to a section that just barely entered
+     * while another one still fills the screen — which is what made it jump
+     * around during a scroll. Measuring all of them is a handful of rect reads
+     * and cannot disagree with itself.
+     */
+    const measure = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 20);
 
-                // Find the section that is most visible in the viewport
-                const mostVisible = intersectingEntries.reduce((max, entry) => {
-                    const rect = entry.target.getBoundingClientRect();
-                    const viewportHeight = window.innerHeight;
+      const viewportHeight = window.innerHeight;
+      let bestId = "";
+      let bestVisible = 0;
 
-                    // Calculate how much of the section is visible
-                    const visibleTop = Math.max(0, rect.top);
-                    const visibleBottom = Math.min(viewportHeight, rect.bottom);
-                    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+      for (const section of sections) {
+        const { top, bottom } = section.getBoundingClientRect();
+        const visible = Math.min(viewportHeight, bottom) - Math.max(0, top);
+        if (visible > bestVisible) {
+          bestVisible = visible;
+          bestId = section.id;
+        }
+      }
 
-                    const maxRect = max.target.getBoundingClientRect();
-                    const maxVisibleTop = Math.max(0, maxRect.top);
-                    const maxVisibleBottom = Math.min(viewportHeight, maxRect.bottom);
-                    const maxVisibleHeight = Math.max(0, maxVisibleBottom - maxVisibleTop);
+      // A short trailing section can never win on height, so once the page is
+      // scrolled to the end, pin the indicator to it.
+      const atBottom =
+        window.scrollY + viewportHeight >= document.documentElement.scrollHeight - 2;
+      if (atBottom) bestId = sections[sections.length - 1].id;
 
-                    return visibleHeight > maxVisibleHeight ? entry : max;
-                }, intersectingEntries[0]);
+      // Setting the same value is a no-op re-render, so this is cheap.
+      if (bestId) setActiveSection(bestId);
+    };
 
-                if (mostVisible) {
-                    setActiveSection(mostVisible.target.id);
-                }
-            },
-            {
-                threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-                rootMargin: '-20% 0px -20% 0px'
-            }
-        );
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(measure);
+    };
 
-        document.querySelectorAll("section[id]").forEach((section) => {
-            observer.observe(section);
-        });
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
 
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-            observer.disconnect();
-        };
-    }, []);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
 
-    return (
-        <>
-            {/* Top Navbar (Desktop Only) */}
-            <nav
-                className={cn(
-                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 hidden md:block",
-                    scrolled ? "nav-glass py-4" : "py-6 bg-transparent"
-                )}
-            >
-                <div className="container mx-auto px-6 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-                        <Smartphone className="w-8 h-8 text-primary" />
-                        <span className="text-gradient">Rajkumar Bhakta</span>
-                    </Link>
+  return (
+    <>
+      {/* Desktop: a top app bar whose nav is itself a connected run. */}
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 hidden border-b transition-[background-color,border-color,box-shadow] duration-[120ms] ease-standard md:block",
+          scrolled
+            ? "border-outline-variant bg-surface-container shadow-toolbar"
+            : "border-transparent bg-surface",
+        )}
+      >
+        <div className="mx-auto flex max-w-[1180px] items-center gap-4 px-4 py-2.5 sm:px-10">
+          <Link
+            href="/"
+            className="flex shrink-0 items-center gap-2 font-display text-label-lg text-on-surface"
+            style={{ fontVariationSettings: '"wdth" 88, "wght" 750' }}
+          >
+            {/* The mark carries its own near-white ground, so it needs a hairline
+                ring to separate from the light theme's surface. */}
+            <Image
+              src="/icon-192.png"
+              alt=""
+              width={26}
+              height={26}
+              priority
+              className="size-[26px] shrink-0 rounded-full ring-1 ring-outline-variant"
+            />
+            {profile.name}
+          </Link>
 
-                    <div className="flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className={cn(
-                                    "text-sm font-medium transition-colors hover:scale-105 transform",
-                                    activeSection === link.href.substring(1)
-                                        ? "text-primary font-bold"
-                                        : "text-gray-300 hover:text-white"
-                                )}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                        <Link
-                            href="#contact"
-                            className="px-6 py-2 rounded-full bg-primary/20 border border-primary/50 text-primary hover:bg-primary/30 transition-all"
-                        >
-                            Hire Me
-                        </Link>
-                    </div>
-                </div>
-            </nav>
-
-            {/* Mobile Top Bar (Logo Only) */}
-            <div className="md:hidden fixed top-0 left-0 right-0 z-40 p-4 transition-all duration-300 bg-background/80 backdrop-blur-md border-b border-white/5">
-                <Link href="/" className="flex items-center gap-2 text-xl font-bold">
-                    <Smartphone className="w-6 h-6 text-primary" />
-                    <span className="text-gradient">Rajkumar Bhakta</span>
+          {/* Connected run: 28dp outer, 8dp inner, 3px gap. */}
+          <nav className="run ml-auto" aria-label="Sections">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.slice(1);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  aria-current={isActive ? "true" : undefined}
+                  className={cn(
+                    "state-layer flex h-[34px] shrink-0 items-center px-3.5 text-label-md",
+                    "transition-[background-color,color] duration-[140ms] ease-standard",
+                    isActive
+                      ? "bg-primary font-semibold text-on-primary"
+                      : "bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest",
+                  )}
+                >
+                  {item.name}
                 </Link>
-            </div>
+              );
+            })}
+          </nav>
 
-            {/* Bottom Navigation (Mobile Only) */}
-            <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass border-t border-glass-border pb-safe">
-                <div className="flex items-center justify-around p-3">
-                    {navLinks.map((link) => {
-                        const Icon = link.icon;
-                        const isActive = activeSection === link.href.substring(1);
-                        return (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className={cn(
-                                    "flex flex-col items-center gap-1 min-w-[3.5rem] p-1 transition-colors group",
-                                    isActive ? "text-primary" : "text-gray-400 hover:text-primary"
-                                )}
-                            >
-                                <div className={cn(
-                                    "p-1.5 rounded-full transition-colors",
-                                    isActive ? "bg-primary/20" : "group-hover:bg-primary/10"
-                                )}>
-                                    <Icon className="w-5 h-5" />
-                                </div>
-                                <span className="text-[10px] font-medium">{link.name}</span>
-                            </Link>
-                        );
-                    })}
-                </div>
-            </nav>
-        </>
-    );
+          <ThemeToggle />
+          <LinkButton href="#contact" size="sm" variant="filled" className="h-[34px] px-4">
+            Hire Me
+          </LinkButton>
+        </div>
+      </header>
+
+      {/* Mobile: M3 navigation bar with a morphing active indicator. */}
+      <nav
+        className="fixed inset-x-0 bottom-0 z-50 bg-surface-container md:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        aria-label="Sections"
+      >
+        <ul className="flex items-stretch justify-around px-2 py-3">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.href.slice(1);
+            return (
+              <li key={item.name} className="flex-1">
+                <Link
+                  href={item.href}
+                  aria-current={isActive ? "true" : undefined}
+                  className="flex flex-col items-center gap-1"
+                >
+                  <span className="relative flex h-8 w-16 items-center justify-center">
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-indicator-mobile"
+                        transition={springs.transition}
+                        className="absolute inset-0 rounded-full bg-secondary-container"
+                      />
+                    )}
+                    {/* M3 fills the glyph of the active destination. */}
+                    <Icon
+                      name={item.icon}
+                      filled={isActive}
+                      size={22}
+                      className={cn(
+                        "relative z-10",
+                        isActive ? "text-on-secondary-container" : "text-on-surface-variant",
+                      )}
+                    />
+                  </span>
+                  <span
+                    className={cn(
+                      "text-label-md",
+                      isActive ? "font-bold text-on-surface" : "text-on-surface-variant",
+                    )}
+                  >
+                    {item.name}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </>
+  );
 }

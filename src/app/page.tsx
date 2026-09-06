@@ -9,7 +9,7 @@ import { Contact } from "@/components/sections/Contact";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+    <main className="min-h-screen bg-surface text-on-surface">
       <Navbar />
       <Hero />
       <About />

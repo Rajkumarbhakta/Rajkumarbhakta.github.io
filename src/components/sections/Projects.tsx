@@ -1,230 +1,158 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ExternalLink, Github, Briefcase, User } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
+import { Card, Chip, Icon, Reveal, RevealGroup, SectionHeader } from "@/components/ui";
+import { projects } from "@/data/projects";
+import type { Project } from "@/data/types";
+import { cn } from "@/lib/utils";
 
-const professionalProjects = [
-    {
-        title: "Olinda",
-        company: "Feelancing",
-        description: "A online grocery ordering app with real-time tracking and payment processing.",
-        tags: ["Android", "Kotlin", "Jetpack Compose", "Retrofit", "Google Maps API", "Payment Gateway"],
-        image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://play.google.com/store/apps/details?id=com.webworldtech.olindaa", github: "" },
-    },
-    {
-        title: "Kuick - Order Food Online",
-        company: "Redoq Software Services Ltd.",
-        description: "Quick online food ordering app with real-time tracking and payment processing.",
-        tags: ["Android", "Kotlin", "XML", "Retrofit", "Google Maps API", "Payment Gateway"],
-        image: "https://res.cloudinary.com/dbezoksfw/image/upload/v1754301960/Redo/Group_1686552958_nag02g.png",
-        links: { demo: "https://play.google.com/store/apps/details?id=com.redoq.kuick", github: "" },
-    },
-    {
-        title: "Kuick Shop CC",
-        company: "Redoq Software Services Ltd.",
-        description: "A POS application for restaurants and cafes to manage orders and billing.",
-        tags: ["Flutter", "Http", "Provider", "Google Analytics"],
-        image: "https://images.unsplash.com/photo-1556742031-c6961e8560b0?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://play.google.com/store/apps/details?id=com.redoq.kuick.ccapp", github: "" },
-    },
-    {
-        title: "Kuick Studio",
-        company: "Redoq Software Services Ltd.",
-        description: "A no-code application builder with drive and database management system.",
-        tags: ["Flutter", "Http", "Bloc", "Google Analytics"],
-        image: "https://res.cloudinary.com/dbezoksfw/image/upload/v1754486849/Group_1686552654_hw8xhy.png",
-        links: { demo: "https://redoq.com/products/kuick-studio", github: "" },
-    },
-    {
-        title: "Trutimer",
-        company: "Sentientgeeks Consultancy and Services",
-        description: "An efficient offline-first employee time tracking app.",
-        tags: ["Android", "Kotlin", "Jetpack Compose", "Room", "Retrofit", "WorkManager", "Google Maps API"],
-        image: "https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "#", github: "" },
-    },
-    {
-        title: "FitLife",
-        company: "Sentientgeeks Consultancy and Services",
-        description: "A customized food delivery application focused on healthy meals.",
-        tags: ["Flutter", "Dio", "Riverpod", "Google Analytics"],
-        image: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "#", github: "" },
-    },
+type Filter = "all" | "professional" | "personal";
+
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "professional", label: "Professional" },
+  { id: "personal", label: "Personal" },
 ];
 
-const personalProjects = [
-    {
-        title: "Canvas (Multiplatform Drawing App)",
-        description: "Cross-platform drawing app (Android, iOS, web, desktop) with offline storage, customizable brushes, undo/redo, and dark mode. 10K+ downloads and 2K+ active users.",
-        tags: ["Kotlin Multiplatform", "Compose Multiplatform", "Coroutines", "Koin"],
-        image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://me.rkbapps.in/canvas_build", github: "https://github.com/Rajkumarbhakta/Canvas" },
-    },
-    {
-        title: "TooAI (AI Utility App)",
-        description: "On-device AI app offering OCR, barcode scanning, and image segmentation using Google ML Kit and TensorFlow Lite.",
-        tags: ["Android", "Kotlin", "Jetpack Compose", "ML Kit", "CameraX", "Hilt"],
-        image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://play.google.com/store/apps/details?id=com.rkbapps.tooai", github: "https://github.com/Rajkumarbhakta/TooAi" },
-    },
-    {
-        title: "G Dealz (Gaming Deals App)",
-        description: "Tracks real-time game deals and free giveaways with notifications. 7K+ downloads. Top rankings in Play Store's 'Top New Free Apps'.",
-        tags: ["Android", "Kotlin", "Retrofit", "Room DB", "Hilt"],
-        image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://play.google.com/store/apps/details?id=com.rkbapps.gdealz", github: "https://github.com/Rajkumarbhakta/GDealz" },
-    },
-    {
-        title: "Physics Galaxy (EdTech App)",
-        description: "Interactive physics learning app with study materials, online tests, and integrated payments. 2K+ downloads.",
-        tags: ["Kotlin", "Jetpack Compose", "Hilt", "Firebase Suite", "Payment Gateway"],
-        image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://play.google.com/store/apps/details?id=com.rkbapps.physicsgalaxy", github: "#" },
-    },
-    {
-        title: "CGPA Calculator - MAKAUT",
-        description: "A comprehensive CGPA/SGPA calculator designed specifically for MAKAUT students (WBUT).",
-        tags: ["Kotlin", "Jetpack Compose", "Room DB", "Hilt"],
-        image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://play.google.com/store/apps/details?id=com.rkbapps.makautsgpaygpacalculator", github: "https://github.com/Rajkumarbhakta/cgpa_calculator_makaut" },
-    },
-    {
-        title: "Nested Menu Bar",
-        description: "A Flutter package for creating multi-level nested horizontal menu bars with ease.",
-        tags: ["Flutter"],
-        image: "https://github.com/Rajkumarbhakta/nested_menu_bar/raw/main/screenshot/screenshot.png",
-        links: { demo: "https://pub.dev/packages/nested_menu_bar", github: "https://github.com/Rajkumarbhakta/nested_menu_bar" },
-    },
-    {
-        title: "Neetflix",
-        description: "Movie discovery application powered by the TMDB API.",
-        tags: ["Android", "Java", "Kotlin", "XML", "Retrofit", "Room DB"],
-        image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "https://github.com/Rajkumarbhakta/Neetflix/releases", github: "https://github.com/Rajkumarbhakta/Neetflix" },
-    },
-    {
-        title: "Pixy",
-        description: "Stock image discovery app fetching real-time data from the Unsplash API.",
-        tags: ["Android", "Kotlin", "Jetpack Compose", "Retrofit", "Room DB"],
-        image: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "#", github: "https://github.com/Rajkumarbhakta/Pixy" },
-    },
-    {
-        title: "Video Player",
-        description: "Android video player built with ExoPlayer and Jetpack Compose.",
-        tags: ["Android", "Kotlin", "Jetpack Compose", "ExoPlayer"],
-        image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&q=80&w=800",
-        links: { demo: "#", github: "https://github.com/Rajkumarbhakta/ExoPlayerDemo" },
-    },
-];
-
-const ProjectCard = ({ project, index }: { project: any; index: number }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="glass-card rounded-2xl overflow-hidden group hover:border-primary/50 transition-colors"
-    >
-        <div className="relative h-48 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
-            <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-            />
-        </div>
-        <div className="p-6">
-            <div className="mb-2">
-                <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
-                    {project.title}
-                </h3>
-                {project.company && (
-                    <div className="flex items-center gap-2 text-sm text-gray-400 mt-1">
-                        <Briefcase className="w-3 h-3" />
-                        <span>{project.company}</span>
-                    </div>
-                )}
-            </div>
-            <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2 mb-6">
-                {project.tags.map((tag: string) => (
-                    <span key={tag} className="text-xs px-3 py-1 rounded-full bg-white/5 text-gray-300 border border-white/10">
-                        {tag}
-                    </span>
-                ))}
-            </div>
-            <div className="flex items-center gap-4">
-                <a
-                    href={project.links.demo}
-                    className="flex items-center gap-2 text-sm font-medium text-white hover:text-primary transition-colors"
-                >
-                    <ExternalLink className="w-4 h-4" /> Live Demo
-                </a>
-                {project.links.github && project.links.github !== "#" && project.links.github !== "" && (
-                    <a
-                        href={project.links.github}
-                        className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
-                    >
-                        <Github className="w-4 h-4" /> Code
-                    </a>
-                )}
-            </div>
-        </div>
-    </motion.div>
-);
+/** First card in each group spans wide; the rest fall into a 12-column grid. */
+const SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-4", "md:col-span-4", "md:col-span-4"];
 
 export function Projects() {
-    return (
-        <section id="projects" className="py-20 bg-black/20">
-            <div className="container mx-auto px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4">Featured <span className="text-gradient">Projects</span></h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        A selection of my recent work in mobile and web development.
-                    </p>
-                </motion.div>
+  const [filter, setFilter] = useState<Filter>("all");
+  const visible = filter === "all" ? projects : projects.filter((p) => p.kind === filter);
 
-                {/* Professional Projects */}
-                <div className="mb-20">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="p-2 rounded-lg bg-primary/20 text-primary">
-                            <Briefcase className="w-6 h-6" />
-                        </div>
-                        <h3 className="text-2xl font-bold text-white">Professional Projects</h3>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {professionalProjects.map((project, index) => (
-                            <ProjectCard key={project.title} project={project} index={index} />
-                        ))}
-                    </div>
-                </div>
+  return (
+    <section id="projects" className="scroll-mt-24 px-4 py-20 sm:px-10">
+      <div className="mx-auto max-w-[1180px]">
+        <SectionHeader
+          eyebrow="Selected work"
+          title="Things I've shipped"
+          supporting="Client work and personal apps, from Play Store releases to open-source packages."
+        />
 
-                {/* Personal Projects */}
-                <div>
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="p-2 rounded-lg bg-secondary/20 text-secondary">
-                            <User className="w-6 h-6" />
-                        </div>
-                        <h3 className="text-2xl font-bold text-white">Personal Projects</h3>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {personalProjects.map((project, index) => (
-                            <ProjectCard key={project.title} project={project} index={index} />
-                        ))}
-                    </div>
-                </div>
+        <RevealGroup className="run mt-8 w-fit">
+          {FILTERS.map(({ id, label }) => (
+            <Reveal asChild key={id}>
+              <Chip
+                variant="filter"
+                selected={filter === id}
+                onClick={() => setFilter(id)}
+                className="h-[38px]"
+              >
+                {label}
+              </Chip>
+            </Reveal>
+          ))}
+        </RevealGroup>
+
+        {/* Plain div, not a RevealGroup: these cards mount and unmount as the
+            filter changes, and each one reveals itself (see ProjectCard) rather
+            than inheriting a variant from a parent. */}
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-12">
+          {visible.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              span={SPANS[index % SPANS.length]}
+              index={index}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({
+  project,
+  span,
+  index,
+}: {
+  project: Project;
+  span: string;
+  index: number;
+}) {
+  // Every image is on a third-party CDN, so any of them can 404 without
+  // warning. Degrade to a tinted initial rather than a broken-image icon.
+  const [imageFailed, setImageFailed] = useState(false);
+
+  return (
+    // Self-revealing rather than `asChild`. Framer only propagates a parent's
+    // variant to children when the parent's `animate` value *changes*; on a
+    // filter switch it stays "show", so a card mounted at that moment would
+    // inherit `initial="hidden"` and never be pushed out of it. Staggering by
+    // index here keeps the cascade without depending on that propagation.
+    <Reveal
+      className={cn("sm:col-span-1", span)}
+      delay={Math.min(index, 6) * 0.04}
+    >
+      <Card variant="filled" interactive className="group flex h-full flex-col overflow-hidden">
+        <div className="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
+          {imageFailed ? (
+            <div className="grid size-full place-items-center bg-primary-container font-display text-headline-md text-on-primary-container">
+              {project.title.charAt(0)}
             </div>
-        </section>
-    );
+          ) : (
+            <Image
+              src={project.image}
+              alt={`${project.title} screenshot`}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              onError={() => setImageFailed(true)}
+              className="object-cover transition-transform duration-[420ms] ease-standard group-hover:scale-[1.03]"
+            />
+          )}
+        </div>
+
+        <div className="flex flex-1 flex-col gap-3 p-5">
+          <div>
+            <h3 className="font-display text-title-lg text-on-surface">{project.title}</h3>
+            {project.company && (
+              <p className="font-mono text-label-sm uppercase tracking-[1.2px] text-primary">
+                {project.company}
+              </p>
+            )}
+          </div>
+
+          <p className="flex-1 text-body-md text-on-surface-variant">{project.description}</p>
+
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.slice(0, 4).map((tag) => (
+              <Chip key={tag} asTag className="h-7 px-3 text-label-md">
+                {tag}
+              </Chip>
+            ))}
+          </div>
+
+          {(project.links.demo || project.links.github) && (
+            <div className="run mt-1 w-fit">
+              {project.links.demo && (
+                <a
+                  href={project.links.demo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="state-layer flex h-9 items-center gap-1.5 bg-surface-container-highest px-4 text-label-md text-primary"
+                >
+                  <Icon name="open_in_new" size={16} />
+                  Live
+                </a>
+              )}
+              {project.links.github && (
+                <a
+                  href={project.links.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="state-layer flex h-9 items-center gap-1.5 bg-surface-container-highest px-4 text-label-md text-on-surface-variant"
+                >
+                  <Icon name="code" size={16} />
+                  Code
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </Card>
+    </Reveal>
+  );
 }
