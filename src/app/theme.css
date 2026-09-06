@@ -1,0 +1,127 @@
+/**
+ * GENERATED FILE — do not edit by hand. Run `npm run theme` to regenerate.
+ *
+ * Material 3 Expressive colour roles from seed #3B82F6.
+ * Chroma: primary 60, secondary /3, tertiary hue+60 /2,
+ * neutral 3, neutral-variant 7. See scripts/gen-theme.mjs.
+ */
+
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+  --md-primary: #015ac2;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #d8e2ff;
+  --md-on-primary-container: #001a42;
+  --md-inverse-primary: #adc6ff;
+  --md-secondary: #545e77;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #d8e2ff;
+  --md-on-secondary-container: #101b31;
+  --md-tertiary: #76527a;
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #fed6ff;
+  --md-on-tertiary-container: #2d0f33;
+  --md-error: #ba1a1a;
+  --md-on-error: #ffffff;
+  --md-error-container: #ffdad6;
+  --md-on-error-container: #410002;
+  --md-surface: #fbf8fb;
+  --md-surface-dim: #dbd9dc;
+  --md-surface-bright: #fbf8fb;
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #f5f3f6;
+  --md-surface-container: #efedf0;
+  --md-surface-container-high: #eae7ea;
+  --md-surface-container-highest: #e4e2e4;
+  --md-on-surface: #1b1b1e;
+  --md-inverse-surface: #303033;
+  --md-inverse-on-surface: #f2f0f3;
+  --md-surface-variant: #e1e2ea;
+  --md-on-surface-variant: #45474d;
+  --md-outline: #75777e;
+  --md-outline-variant: #c5c6ce;
+  --md-scrim: #000000;
+  --md-shadow: #000000;
+  --md-surface-tint: #015ac2;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --md-primary: #adc6ff;
+  --md-on-primary: #002e6a;
+  --md-primary-container: #004395;
+  --md-on-primary-container: #d8e2ff;
+  --md-inverse-primary: #015ac2;
+  --md-secondary: #bcc6e3;
+  --md-on-secondary: #263047;
+  --md-secondary-container: #3c475e;
+  --md-on-secondary-container: #d8e2ff;
+  --md-tertiary: #e4b8e6;
+  --md-on-tertiary: #442449;
+  --md-tertiary-container: #5c3b61;
+  --md-on-tertiary-container: #fed6ff;
+  --md-error: #ffb4ab;
+  --md-on-error: #690005;
+  --md-error-container: #93000a;
+  --md-on-error-container: #ffdad6;
+  --md-surface: #131315;
+  --md-surface-dim: #131315;
+  --md-surface-bright: #39393b;
+  --md-surface-container-lowest: #0e0e10;
+  --md-surface-container-low: #1b1b1e;
+  --md-surface-container: #1f1f22;
+  --md-surface-container-high: #2a2a2c;
+  --md-surface-container-highest: #343537;
+  --md-on-surface: #e4e2e4;
+  --md-inverse-surface: #e4e2e4;
+  --md-inverse-on-surface: #303033;
+  --md-surface-variant: #45474d;
+  --md-on-surface-variant: #c5c6ce;
+  --md-outline: #8f9098;
+  --md-outline-variant: #45474d;
+  --md-scrim: #000000;
+  --md-shadow: #000000;
+  --md-surface-tint: #adc6ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --md-primary: #adc6ff;
+    --md-on-primary: #002e6a;
+    --md-primary-container: #004395;
+    --md-on-primary-container: #d8e2ff;
+    --md-inverse-primary: #015ac2;
+    --md-secondary: #bcc6e3;
+    --md-on-secondary: #263047;
+    --md-secondary-container: #3c475e;
+    --md-on-secondary-container: #d8e2ff;
+    --md-tertiary: #e4b8e6;
+    --md-on-tertiary: #442449;
+    --md-tertiary-container: #5c3b61;
+    --md-on-tertiary-container: #fed6ff;
+    --md-error: #ffb4ab;
+    --md-on-error: #690005;
+    --md-error-container: #93000a;
+    --md-on-error-container: #ffdad6;
+    --md-surface: #131315;
+    --md-surface-dim: #131315;
+    --md-surface-bright: #39393b;
+    --md-surface-container-lowest: #0e0e10;
+    --md-surface-container-low: #1b1b1e;
+    --md-surface-container: #1f1f22;
+    --md-surface-container-high: #2a2a2c;
+    --md-surface-container-highest: #343537;
+    --md-on-surface: #e4e2e4;
+    --md-inverse-surface: #e4e2e4;
+    --md-inverse-on-surface: #303033;
+    --md-surface-variant: #45474d;
+    --md-on-surface-variant: #c5c6ce;
+    --md-outline: #8f9098;
+    --md-outline-variant: #45474d;
+    --md-scrim: #000000;
+    --md-shadow: #000000;
+    --md-surface-tint: #adc6ff;
+  }
+}
