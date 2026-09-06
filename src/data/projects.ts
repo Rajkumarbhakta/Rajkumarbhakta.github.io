@@ -6,16 +6,6 @@ import type { Project } from "./types";
  */
 export const projects: Project[] = [
   {
-    slug: "olinda",
-    title: "Olinda",
-    kind: "professional",
-    company: "Freelancing",
-    description: "An online grocery ordering app with real-time tracking and payment processing.",
-    tags: ["Android", "Kotlin", "Jetpack Compose", "Retrofit", "Google Maps API", "Payment Gateway"],
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800",
-    links: { demo: "https://play.google.com/store/apps/details?id=com.webworldtech.olindaa" },
-  },
-  {
     slug: "kuick",
     title: "Kuick - Order Food Online",
     kind: "professional",
@@ -65,14 +55,24 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?auto=format&fit=crop&q=80&w=800",
     links: {},
   },
+  {
+    slug: "olinda",
+    title: "Olinda",
+    kind: "professional",
+    company: "Freelancing",
+    description: "An online grocery ordering app with real-time tracking and payment processing.",
+    tags: ["Android", "Kotlin", "Jetpack Compose", "Retrofit", "Google Maps API", "Payment Gateway"],
+    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800",
+    links: { demo: "https://play.google.com/store/apps/details?id=com.webworldtech.olindaa" },
+  },
 
   {
     slug: "canvas",
     title: "Canvas",
     kind: "personal",
     description:
-      "Cross-platform drawing app (Android, iOS, web, desktop) with offline storage, customizable brushes, undo/redo, and dark mode. 10K+ downloads and 2K+ active users.",
-    tags: ["Kotlin Multiplatform", "Compose Multiplatform", "Coroutines", "Koin"],
+      "One shared Kotlin Multiplatform codebase shipped to Android, iOS and Desktop. Offline storage, an undo/redo stack and 10+ customizable brush tools. 17K+ downloads and 4K+ monthly active users.",
+    tags: ["Kotlin Multiplatform", "Compose Multiplatform", "Coroutines", "Multiplatform Settings"],
     image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800",
     links: {
       demo: "https://me.rkbapps.in/canvas_build",
@@ -84,8 +84,8 @@ export const projects: Project[] = [
     title: "TooAI",
     kind: "personal",
     description:
-      "On-device AI app offering OCR, barcode scanning, and image segmentation using Google ML Kit and TensorFlow Lite.",
-    tags: ["Android", "Kotlin", "Jetpack Compose", "ML Kit", "CameraX", "Hilt"],
+      "Offline AI utility: real-time OCR, barcode scanning and image segmentation via ML Kit, plus on-device LLM inference (Gemma, DeepSeek, Qwen) through the Google AI Edge SDK and LiteRT runtime. Includes a system-wide writing assistant that runs entirely on local models.",
+    tags: ["Kotlin", "ML Kit", "Google AI Edge SDK", "LiteRT-LM", "Coroutines"],
     image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800",
     links: {
       demo: "https://play.google.com/store/apps/details?id=com.rkbapps.tooai",
@@ -93,12 +93,25 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "nested-menu-bar",
+    title: "Nested Menu Bar",
+    kind: "personal",
+    description: "A Flutter package for creating multi-level nested horizontal menu bars with ease.",
+    tags: ["Flutter"],
+    image:
+        "https://github.com/Rajkumarbhakta/nested_menu_bar/raw/main/screenshot/screenshot.png",
+    links: {
+      demo: "https://pub.dev/packages/nested_menu_bar",
+      github: "https://github.com/Rajkumarbhakta/nested_menu_bar",
+    },
+  },
+  {
     slug: "g-dealz",
     title: "G Dealz",
     kind: "personal",
     description:
-      "Tracks real-time game deals and free giveaways with notifications. 7K+ downloads. Top rankings in Play Store's 'Top New Free Apps'.",
-    tags: ["Android", "Kotlin", "Retrofit", "Room DB", "Hilt"],
+      "Real-time game deals and freebies tracker with background notifications scheduled through WorkManager. 10K+ downloads, and featured in Play Store's \"Top New Free Apps\" across the US, Canada and Japan.",
+    tags: ["Kotlin", "MVVM", "Retrofit", "WorkManager", "Room", "Compose"],
     image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=800",
     links: {
       demo: "https://play.google.com/store/apps/details?id=com.rkbapps.gdealz",
@@ -126,19 +139,6 @@ export const projects: Project[] = [
     links: {
       demo: "https://play.google.com/store/apps/details?id=com.rkbapps.makautsgpaygpacalculator",
       github: "https://github.com/Rajkumarbhakta/cgpa_calculator_makaut",
-    },
-  },
-  {
-    slug: "nested-menu-bar",
-    title: "Nested Menu Bar",
-    kind: "personal",
-    description: "A Flutter package for creating multi-level nested horizontal menu bars with ease.",
-    tags: ["Flutter"],
-    image:
-      "https://github.com/Rajkumarbhakta/nested_menu_bar/raw/main/screenshot/screenshot.png",
-    links: {
-      demo: "https://pub.dev/packages/nested_menu_bar",
-      github: "https://github.com/Rajkumarbhakta/nested_menu_bar",
     },
   },
   {

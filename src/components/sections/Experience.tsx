@@ -26,10 +26,19 @@ export function Experience() {
                     {job.start} — {job.end ?? "Present"}
                   </p>
                   <h3 className="font-display mt-1 text-title-lg text-on-surface">{job.role}</h3>
-                  <p className="text-body-md text-on-surface-variant">{job.company}</p>
-                  <p className="mt-3 max-w-[68ch] text-body-md text-on-surface-variant">
-                    {job.description}
+                  <p className="text-body-md text-on-surface-variant">
+                    {job.company} · {job.location}
                   </p>
+                  <ul className="mt-3 flex max-w-[68ch] flex-col gap-1.5">
+                    {job.highlights.map((highlight) => (
+                      <li
+                        key={highlight}
+                        className="relative pl-4 text-body-md text-on-surface-variant before:absolute before:left-0 before:top-[0.6em] before:size-1.5 before:rounded-full before:bg-outline before:content-['']"
+                      >
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {job.skills.map((skill) => (
                       <Chip key={skill} asTag>

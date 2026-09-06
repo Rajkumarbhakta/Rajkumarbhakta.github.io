@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://me.rkbapps.in"),
   manifest: "/manifest.webmanifest",
   title: `${profile.name} | ${profile.role}`,
-  description: `Portfolio of ${profile.name}, a ${profile.role} building high-performance applications.`,
+  description: `${profile.name} — ${profile.role}. ${profile.specialisms}. Three years shipping production Android and cross-platform apps, with 30K+ downloads on Google Play.`,
   openGraph: {
     type: "website",
     title: `${profile.name} | ${profile.role}`,

@@ -2,15 +2,13 @@ import type { IconName } from "@/components/ui/Icon";
 
 export type SkillCategory =
   | "Languages"
+  | "Android"
   | "Cross-Platform"
   | "Architecture"
-  | "Android"
-  | "DI"
+  | "On-Device AI"
   | "Backend"
-  | "Network"
-  | "Tools"
-  | "CI/CD"
-  | "Testing";
+  | "Testing & CI/CD"
+  | "Tools";
 
 export interface Skill {
   name: string;
@@ -39,10 +37,11 @@ export interface Experience {
   company: string;
   /** Initials shown in the timeline avatar. */
   companyShort: string;
+  location: string;
   start: string;
   /** `null` renders as "Present". */
   end: string | null;
-  description: string;
+  highlights: string[];
   skills: string[];
 }
 

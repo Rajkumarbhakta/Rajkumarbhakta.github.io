@@ -8,6 +8,7 @@ export type IconName =
   | "check"
   | "code"
   | "dark_mode"
+  | "download"
   | "edit"
   | "home"
   | "layers"

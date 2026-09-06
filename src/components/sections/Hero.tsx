@@ -24,7 +24,7 @@ export function Hero() {
         <RevealGroup className="flex max-w-[68ch] flex-col items-start gap-5">
           <Reveal asChild>
             <p className="font-mono text-label-sm uppercase tracking-[1.6px] text-primary">
-              {profile.role}
+              {profile.role} · {profile.specialisms}
             </p>
           </Reveal>
 
@@ -55,6 +55,7 @@ export function Hero() {
               <LinkButton href="#contact" variant="tonal" size="lg">
                 Contact Me
               </LinkButton>
+
             </div>
           </Reveal>
         </RevealGroup>

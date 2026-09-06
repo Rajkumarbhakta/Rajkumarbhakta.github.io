@@ -3,15 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView, useReducedMotion } from "framer-motion";
 import { Reveal, RevealGroup, SectionHeader } from "@/components/ui";
-import { profile, stats } from "@/data/profile";
+import { education, profile, stats } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
-/** Last tile in the run takes the accent, as the guide's own tier block does. */
-const TILE_TONES = [
-  "bg-surface-container text-on-surface",
-  "bg-surface-container text-on-surface",
-  "bg-primary-container text-on-primary-container",
-];
+/** The run reads as one object with the last tile carrying the accent. */
+const TILE_BASE = "bg-surface-container text-on-surface";
+const TILE_ACCENT = "bg-primary-container text-on-primary-container";
 
 export function About() {
   return (
@@ -32,10 +29,15 @@ export function About() {
         </Reveal>
 
         {/* A connected run of stat tiles: 28dp outer, 8dp inner, 3px gap. */}
-        <RevealGroup className="run mt-10 max-w-[760px] flex-col sm:flex-row">
+        <RevealGroup className="run mt-10 max-w-[860px] flex-col sm:flex-row">
           {stats.map((stat, index) => (
             <Reveal asChild key={stat.label} className="flex-1">
-              <div className={cn("flex h-full flex-col gap-1 px-6 py-6", TILE_TONES[index % 3])}>
+              <div
+                className={cn(
+                  "flex h-full flex-col gap-1 px-5 py-6",
+                  index === stats.length - 1 ? TILE_ACCENT : TILE_BASE,
+                )}
+              >
                 <CountUp value={stat.value} suffix={stat.suffix} />
                 <span className="font-mono text-label-sm uppercase tracking-[1.2px] opacity-70">
                   {stat.label}
@@ -44,6 +46,18 @@ export function About() {
             </Reveal>
           ))}
         </RevealGroup>
+
+        <Reveal className="mt-4 max-w-[860px]">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-card border border-outline-variant px-5 py-4">
+            <span className="font-mono text-label-sm uppercase tracking-[1.2px] text-primary">
+              Education
+            </span>
+            <span className="text-body-md text-on-surface">{education.degree}</span>
+            <span className="text-body-md text-on-surface-variant">
+              {education.institution} · {education.period} · {education.result}
+            </span>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

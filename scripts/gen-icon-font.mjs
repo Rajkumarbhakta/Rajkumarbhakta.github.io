@@ -18,6 +18,7 @@ const ICONS = [
   "check",
   "code",
   "dark_mode",
+  "download",
   "edit",
   "home",
   "layers",
